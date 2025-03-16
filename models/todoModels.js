@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 
 const todoSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId,
+         ref: "user", required: true },
     todo: {
         type: String,
         required: true,
@@ -11,6 +13,6 @@ const todoSchema = new mongoose.Schema({
     },
 });
 
-const Todo = mongoose.model("Todo", todoSchema);
+const TodoModel = mongoose.model("Todo", todoSchema);
 
-module.exports = Todo;
+module.exports = TodoModel;
