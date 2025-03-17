@@ -14,11 +14,11 @@ module.exports.signup = async(req, res)=> {
     userModel.password= await bcrypt.hash(password,10);
     await userModel.save();
     res.status(201)
-    .json({message: "signup successfully",success:true});
+    .json({message: "Signup successfully",success:true});
   }
   catch(err){
       res.status(500)
-      .json({message:"signup failed",success: false});
+      .json({message:"Signup failed",success: false});
   }
 };
 
@@ -28,12 +28,12 @@ module.exports.login = async(req, res)=> {
       const user = await UserModel.findOne({email});
       if(!user){
           return res.status(403)
-          .json({message: "user not found!",success: false});
+          .json({message: "User not found!",success: false});
       }
       const ispassEqual = await bcrypt.compare(password,user.password);
       if(!ispassEqual){
         return res.status(403)
-        .json({message:"auth failed",success:false});
+        .json({message:"Incorrect password. Please try again.",success:false});
       }
       const jwtToken = jwt.sign(
         {email: user.email,_id: user.id},
