@@ -15,6 +15,9 @@ const userSchema = new schema({
         type: String ,
         required: true,
     },
+    confirmationCode: {type: String},
+    isVerified: { type: Boolean, default: false },
+    codeExpiresAt: {type: Date},
 },{timestamps:true});
 
 const UserModel = mongoose.model('user',userSchema);

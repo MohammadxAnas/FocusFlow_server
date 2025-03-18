@@ -26,8 +26,21 @@ const loginValidation = (req, res, next)=>{
     }
     next();
 }
+const codeValidation = (req, res, next)=>{
+    const schema = joi.object({
+        code: joi.string().min(6).max(6).required()
+    });
+    const {error} = schema.validate(req.body);
+    if (error){
+        return res.status(400)
+        .json({message:"bad request",error})
+    }
+    next();
+}
+
 
 module.exports = {
     signupValidation,
-    loginValidation
+    loginValidation,
+    codeValidation
 }
