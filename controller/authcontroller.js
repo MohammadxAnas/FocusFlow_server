@@ -72,7 +72,7 @@ module.exports.confirmEmail = async (req, res) => {
       // Remove from temp storage
       delete tempUsers[email];
 
-      res.status(200).json({ message: "Email confirmed! You can now log in.",succes: true });
+      res.status(200).json({ message: "Email confirmed! You can now log in.",success: true });
   } catch (error) {
       console.error("Error confirming email:", error);
       res.status(500).json({ message: "Internal Server Error" });
