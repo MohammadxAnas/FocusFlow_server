@@ -4,13 +4,13 @@ const sendConfirmationEmail = async (userEmail, confirmationCode) => {
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: "shabanaqadar786@gmail.com", // Replace with your actual email
-            pass: "kirujgoyisuqhcau", // ✅ Put your App Password inside quotes!
+            user: "daemon11irving@gmail.com", 
+            pass: "aqyyldtknagfiiyn", 
         },
     });
 
     const mailOptions = {
-        from: "shabanaqadar786@gmail.com",
+        from: "daemon11irving@gmail.com",
         to: userEmail,
         subject: "Email Confirmation Code",
         text: `Your confirmation code is: ${confirmationCode}`,
