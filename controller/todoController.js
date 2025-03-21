@@ -54,3 +54,18 @@ module.exports.updateTodos = async (req, res) => {
     res.status(500).json({ message: "Error updating todo", error });
   }
 };
+
+module.exports.removeAccount = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+  }
+  res.json({ success: true, message: "Account deleted successfully!" });
+} catch (error) {
+    console.error("Error deleting account:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+}
+};
