@@ -8,6 +8,6 @@ const router = Router();
 router.post("/login",loginValidation,login);
 router.post("/signup",signupValidation,signup);
 router.post("/verify",codeValidation,confirmEmail);
-router.delete("/remove",ensureAuthenticated,removeAccount);
+router.delete("/remove/:userId",ensureAuthenticated,removeAccount);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const UserModel = require("../models/user");
+const TodoModel = require("../models/todoModels");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { sendConfirmationEmail } = require("../middleware/confirmation");
@@ -28,8 +29,6 @@ module.exports.signup = async(req, res)=> {
           confirmationCode,
           codeExpiresAt,
       };
-      console.log(tempUsers);
-      // 🔹 Send the confirmation email
       await sendConfirmationEmail(email, confirmationCode);
 
       res.status(200).json({ message: "Confirmation email sent! Please verify your email.",success: true });
@@ -46,12 +45,10 @@ module.exports.confirmEmail = async (req, res) => {
 
       if (!email || !code) {
         return res.status(400).json({ message: "Email and confirmation code required!" });
-        console.log("hii");
     }
 
       if (!tempUsers[email]) {
           return res.status(400).json({ message: "Invalid or expired confirmation code" });
-          console.log("hii");
       }
 
       const userData = tempUsers[email];
@@ -114,10 +111,10 @@ module.exports.login = async(req, res)=> {
 
   module.exports.removeAccount = async (req, res) => {
     try {
-      const userId = req.user.id; // Extract user ID from token
-
-      const deletedUser = await User.findByIdAndDelete(userId);
-      if (!deletedUser) {
+      const { userId } = req.params; // Extract user ID from token
+      const deletedTodo = await TodoModel.findByIdAndDelete(userId);
+      const deletedUser = await UserModel.findByIdAndDelete(userId);
+      if (!deletedUser || !deletedTodo) {
           return res.status(404).json({ success: false, message: "User not found" });
       }
 
