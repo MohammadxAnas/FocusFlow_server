@@ -29,6 +29,7 @@ module.exports.signup = async(req, res)=> {
           confirmationCode,
           codeExpiresAt,
       };
+      console.log(tempUsers);
       await sendConfirmationEmail(email, confirmationCode);
 
       res.status(200).json({ message: "Confirmation email sent! Please verify your email.",success: true });
@@ -112,11 +113,12 @@ module.exports.login = async(req, res)=> {
   module.exports.removeAccount = async (req, res) => {
     try {
       const { userId } = req.params; // Extract user ID from token
-      const deletedTodo = await TodoModel.findByIdAndDelete(userId);
       const deletedUser = await UserModel.findByIdAndDelete(userId);
-      if (!deletedUser || !deletedTodo) {
+      if (!deletedUser) {
           return res.status(404).json({ success: false, message: "User not found" });
       }
+      
+      await TodoModel.deleteMany({ userId });
 
       res.json({ success: true, message: "Account deleted successfully!" });
   } catch (error) {
