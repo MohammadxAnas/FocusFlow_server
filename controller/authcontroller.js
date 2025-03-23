@@ -141,3 +141,19 @@ module.exports.login = async(req, res)=> {
   }
 
   };
+
+  module.exports.logout = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const user = await UserModel.findById(userId);
+        if (user) {
+            user.sessionToken = null; // Clear session token
+            await user.save(); 
+            console.log("ok");
+        }
+        res.json({ success: true, message: "Logged out successfully" });
+    } catch (error) {
+        console.error("Logout error:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
