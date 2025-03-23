@@ -91,8 +91,13 @@ module.exports.login = async(req, res)=> {
         return res.status(403)
         .json({message:"Incorrect password. Please try again.",success:false});
       }
+
+      const sessionToken = crypto.randomBytes(32).toString("hex");
+
+      user.sessionToken = sessionToken;
+
       const jwtToken = jwt.sign(
-        {email: user.email,_id: user.id},
+        {email: user.email,_id: user.id, sessionToken},
         process.env.JWT_SECRET,
         {expiresIn: '24h'}
       )
@@ -103,6 +108,14 @@ module.exports.login = async(req, res)=> {
         email,
         name:user.name
     });
+
+     console.log({message: "Login successfully",
+      success:true,
+      jwtToken,
+      sessionToken,
+      email,
+      name:user.name
+  });
     }
     catch(err){
         res.status(500)
