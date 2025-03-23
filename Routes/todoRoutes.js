@@ -6,9 +6,9 @@ const validateSession = require("../middleware/validateSession");
 const router = Router();
 
 router.get("/get",validateSession,getTodos);
-router.post("/save",ensureAuthenticated, saveTodos);
-router.put("/update/:id", ensureAuthenticated, updateTodos);
-router.delete("/delete/:id", ensureAuthenticated, deleteTodos);
+router.post("/save",validateSession, saveTodos);
+router.put("/update/:id", validateSession, updateTodos);
+router.delete("/delete/:id", validateSession, deleteTodos);
 
 
 module.exports = router;

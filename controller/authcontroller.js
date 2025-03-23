@@ -95,6 +95,7 @@ module.exports.login = async(req, res)=> {
       const sessionToken = crypto.randomBytes(32).toString("hex");
 
       user.sessionToken = sessionToken;
+      await user.save();
 
       const jwtToken = jwt.sign(
         {email: user.email,_id: user.id, sessionToken},
