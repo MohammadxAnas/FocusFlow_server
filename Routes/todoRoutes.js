@@ -1,6 +1,5 @@
 const {Router} = require("express");
 const { getTodos, saveTodos, updateTodos, deleteTodos } = require("../controller/todoController");
-const ensureAuthenticated = require("../middleware/auth");
 const validateSession = require("../middleware/validateSession");
 
 const router = Router();
