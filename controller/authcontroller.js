@@ -92,8 +92,7 @@ module.exports.login = async(req, res)=> {
         .json({message:"Incorrect password. Please try again.",success:false});
       }
       if(user.sessionToken !== null){
-        return res.status(403)
-        .json({message:"user already logged in from other device",success:false});
+        user.sessionToken = null;
       }
       const sessionToken = crypto.randomBytes(32).toString("hex");
 
